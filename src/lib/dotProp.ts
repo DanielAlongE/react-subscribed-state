@@ -69,7 +69,7 @@ export function _set (obj:any, props:any[] | string, value:any, immutable=true) 
 }
 
 export function expandObject(obj:any){
-  let newObj = {};
+  let newObj: any = {};
 
   for(let key in obj){
     if(isDotted(key)){
@@ -142,7 +142,7 @@ export function del ( obj:any, props:any[] | string ) {
   const last = pathArr[count-1];
   const newPathArr = pathArr.slice(0, (count-1));
 
-  if(Number.isInteger(last)){
+  if(isNumeric(last)){
     let arr:any[] = get(obj, newPathArr, []);
     arr = arr.filter((o,i) => i!==last );
     return _set(obj, newPathArr, arr);
