@@ -1,0 +1,20 @@
+{
+  "name": "subscribed-state",
+  "version": "1.0.0",
+  "description": "A custom reactivity pattern in React.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielAlongE/subscribed-state.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielAlongE/subscribed-state/issues"
+  },
+  "homepage": "https://github.com/DanielAlongE/subscribed-state#readme"
+}
