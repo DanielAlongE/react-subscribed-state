@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A custom reactivity pattern in React.js",
   "main": "dist/index.js",
+  "source": "src/index.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/DanielAlongE/subscribed-state.git"
   },
+  "files": [
+    "dist/"
+  ],
   "keywords": [
     "hooks",
     "react",
