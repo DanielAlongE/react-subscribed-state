@@ -39,8 +39,8 @@ export const context = createContext<ContextProp>({})
 
 const isFunction = (val: unknown): val is Function => typeof val === 'function'
 
-function useWrapper<T = any>(){
-    const stateRef = useRef<T>()
+function useWrapper<T = any>(stateRef:MutableRefObject<T>){
+    
     const subscribersRef: MutableRefObject<Array<RefFunc | null>> = useRef([])
 //    const debounceRef = useRef({})
 
@@ -94,8 +94,8 @@ function useWrapper<T = any>(){
 
 
 
-export function useProvider<T = any>(){
-    const { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber } = useWrapper<T>();
+export function useProvider<T = any>(stateRef: MutableRefObject<T>){
+    const { setStateField, setStateFields, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
     const { Provider } = context;
     const value = { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber };
 
