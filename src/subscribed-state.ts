@@ -2,14 +2,17 @@ import { createContext, useRef, useCallback, MutableRefObject, useContext, useEf
 import dotProp from "./lib/dotProp";
 
 type ValueProp = unknown | ((s:any)=>any) 
+
 export type RefFunc = (key?:string, value?:any, previousValue?:any)=> void
+
 export type ShouldUpdateFunc = (key?:string, value?:any, previousValue?:any)=> boolean
+
 interface ContextProp {
     stateRef?: MutableRefObject<any>
-    setStateField?: (k:string, v:ValueProp)=>any
+    setStateField?: (field:string, value:ValueProp)=>any
     setStateFields?: (s: Array<[string, ValueProp]>)=>void
     addSubscriber?: (i:RefFunc, d?:number)=>number
-    removeSubscriber?: (i:number)=>void
+    removeSubscriber?: (index:number)=>void
 }
 
 const debounce = function(fn:unknown, delay: number = 100){
@@ -22,15 +25,15 @@ const debounce = function(fn:unknown, delay: number = 100){
     return function(...args: any[]){
 
         if(timeoutID){
-            console.log("debounce clear ", timeoutID)
+            //console.log("debounce clear ", timeoutID)
             clearTimeout(timeoutID);
         }
 
         timeoutID = setTimeout( () => {
-            console.log("debounce end ", timeoutID)
+            //console.log("debounce end ", timeoutID)
             fn(...args)
         }, delay );
-        console.log("debounce start ", timeoutID)
+        //console.log("debounce start ", timeoutID)
     }
 
 } 
