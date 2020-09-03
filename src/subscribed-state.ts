@@ -3,9 +3,9 @@ import dotProp from "./lib/dotProp";
 
 type ValueProp = unknown | ((s:any)=>any) 
 
-export type RefFunc = (key?:string, value?:any, previousValue?:any)=> void
+export type RefFunc = (key:string, value?:any, previousValue?:any)=> void
 
-export type ShouldUpdateFunc = (key?:string, value?:any, previousValue?:any)=> boolean
+export type ShouldUpdateFunc = (key:string, value?:any, previousValue?:any)=> boolean
 
 interface ContextProp {
     stateRef?: MutableRefObject<any>
