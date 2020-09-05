@@ -6,7 +6,7 @@ const MouseParentComp = ({ children }:{children:any}) => {
 
   const handleMousePosition = (e:{clientX: number, clientY: number}) => {
     if (e) {
-      const { clientX=0, clientY=0 } = e;
+      const { clientX = 0, clientY = 0 } = e;
       if (clientX) {
         setStateField('x', clientX);
       }
