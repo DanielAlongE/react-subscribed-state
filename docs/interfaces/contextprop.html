@@ -1,0 +1,371 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ContextProp | @alonge/subscribed-state</title>
+	<meta name="description" content="Documentation for @alonge/subscribed-state">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@alonge/subscribed-state</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="contextprop.html">ContextProp</a>
+				</li>
+			</ul>
+			<h1>Interface ContextProp</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">ContextProp</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="contextprop.html#addsubscriber" class="tsd-kind-icon">add<wbr>Subscriber</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="contextprop.html#removesubscriber" class="tsd-kind-icon">remove<wbr>Subscriber</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="contextprop.html#setstatefield" class="tsd-kind-icon">set<wbr>State<wbr>Field</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="contextprop.html#setstatefields" class="tsd-kind-icon">set<wbr>State<wbr>Fields</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="contextprop.html#stateref" class="tsd-kind-icon">state<wbr>Ref</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="addsubscriber" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> add<wbr>Subscriber</h3>
+					<div class="tsd-signature tsd-kind-icon">add<wbr>Subscriber<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><a href="../globals.html#reffunc" class="tsd-signature-type">RefFunc</a>, d<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DanielAlongE/subscribed-state/blob/63037be/src/subscribed-state.ts#L14">subscribed-state.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><a href="../globals.html#reffunc" class="tsd-signature-type">RefFunc</a>, d<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>i: <a href="../globals.html#reffunc" class="tsd-signature-type">RefFunc</a></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> d: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="removesubscriber" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> remove<wbr>Subscriber</h3>
+					<div class="tsd-signature tsd-kind-icon">remove<wbr>Subscriber<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DanielAlongE/subscribed-state/blob/63037be/src/subscribed-state.ts#L15">subscribed-state.ts:15</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>index: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="setstatefield" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> set<wbr>State<wbr>Field</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>State<wbr>Field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><a href="../globals.html#valueprop" class="tsd-signature-type">ValueProp</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DanielAlongE/subscribed-state/blob/63037be/src/subscribed-state.ts#L12">subscribed-state.ts:12</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><a href="../globals.html#valueprop" class="tsd-signature-type">ValueProp</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>field: <span class="tsd-signature-type">string</span></h5>
+											</li>
+											<li>
+												<h5>value: <a href="../globals.html#valueprop" class="tsd-signature-type">ValueProp</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="setstatefields" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> set<wbr>State<wbr>Fields</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>State<wbr>Fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#valueprop" class="tsd-signature-type">ValueProp</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DanielAlongE/subscribed-state/blob/63037be/src/subscribed-state.ts#L13">subscribed-state.ts:13</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#valueprop" class="tsd-signature-type">ValueProp</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>s: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../globals.html#valueprop" class="tsd-signature-type">ValueProp</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="stateref" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> state<wbr>Ref</h3>
+					<div class="tsd-signature tsd-kind-icon">state<wbr>Ref<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MutableRefObject</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/DanielAlongE/subscribed-state/blob/63037be/src/subscribed-state.ts#L11">subscribed-state.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="contextprop.html" class="tsd-kind-icon">Context<wbr>Prop</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="contextprop.html#addsubscriber" class="tsd-kind-icon">add<wbr>Subscriber</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="contextprop.html#removesubscriber" class="tsd-kind-icon">remove<wbr>Subscriber</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="contextprop.html#setstatefield" class="tsd-kind-icon">set<wbr>State<wbr>Field</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="contextprop.html#setstatefields" class="tsd-kind-icon">set<wbr>State<wbr>Fields</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="contextprop.html#stateref" class="tsd-kind-icon">state<wbr>Ref</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#reffunc" class="tsd-kind-icon">Ref<wbr>Func</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#shouldupdatefunc" class="tsd-kind-icon">Should<wbr>Update<wbr>Func</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#valueprop" class="tsd-kind-icon">Value<wbr>Prop</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#context" class="tsd-kind-icon">context</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#counter" class="tsd-kind-icon">Counter</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#modal" class="tsd-kind-icon">Modal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#mouseparentcomp" class="tsd-kind-icon">Mouse<wbr>Parent<wbr>Comp</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#mousepositiondisplay" class="tsd-kind-icon">Mouse<wbr>Position<wbr>Display</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#progressbar" class="tsd-kind-icon">Progress<wbr>Bar</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#simpleform" class="tsd-kind-icon">Simple<wbr>Form</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#spreadsheet" class="tsd-kind-icon">Spreadsheet</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#_set" class="tsd-kind-icon">_set</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#buildobj" class="tsd-kind-icon">build<wbr>Obj</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#debounce" class="tsd-kind-icon">debounce</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#default" class="tsd-kind-icon">default</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#del" class="tsd-kind-icon">del</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#expandobject" class="tsd-kind-icon">expand<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#isdotted" class="tsd-kind-icon">is<wbr>Dotted</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#isfunction" class="tsd-kind-icon">is<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#isnumeric" class="tsd-kind-icon">is<wbr>Numeric</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#isobject" class="tsd-kind-icon">is<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#stringtoarrayprop" class="tsd-kind-icon">string<wbr>ToArray<wbr>Prop</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#useprovider" class="tsd-kind-icon">use<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#usesubscribedstate" class="tsd-kind-icon">use<wbr>Subscribed<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="../globals.html#usewrapper" class="tsd-kind-icon">use<wbr>Wrapper</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@alonge/subscribed-state</title>
+	<meta name="description" content="Documentation for @alonge/subscribed-state">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@alonge/subscribed-state</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@alonge/subscribed-state</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#subscribed-state" id="subscribed-state" style="color: inherit; text-decoration: none;">
+					<h1>subscribed-state</h1>
+				</a>
+				<p>A custom state reactivity pattern in React.js</p>
+				<p>With subscribed-state, components can subscribe to fields in the state such that they are able to re-render when the values of such fields change. This will go a long way to eliminate wasted renders as only the components that are required to rerender will do so.</p>
+				<p>The following are some examples of use cases:</p>
+				<ul>
+					<li>Complex forms with several moving parts such as Error Messages and Computed properties</li>
+					<li>Game score board</li>
+					<li>Progress bar that displays progress details</li>
+					<li>Spreadsheet </li>
+				</ul>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<pre><code class="language-sh">npm i @alonge/subscribed-state</code></pre>
+				<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
+					<h2>Setup</h2>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { useProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@alonge/subscribed-state&quot;</span>;
+<span class="hljs-keyword">import</span> { useRef } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">const</span> stateRef = useRef({<span class="hljs-attr">count</span>:<span class="hljs-number">0</span>, <span class="hljs-attr">me</span>:<span class="hljs-string">&quot;daniel&quot;</span>}); <span class="hljs-comment">//define default values</span>
+  <span class="hljs-keyword">const</span> { Provider, value } = useProvider(stateRef);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span>
+  );
+}</code></pre>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { useSubscribedState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@alonge/subscribed-state&quot;</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">IncrementButton</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">const</span> { setStateField } = useSubscribedState();
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span>=&gt;</span>setStateField(&#x27;count&#x27;, x =&gt; !x ? 1 : x+1 )}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CountField</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">/*
+    *   useSubscribedState receives 2 optional params and returns a boolean 
+    *   to determine whether component should re-render
+    *   shouldUpdate = (fieldKey, value, previousValue): boolean 
+    *   debounce: boolean this might be useful with values that change frequently 
+    */</span>
+  <span class="hljs-keyword">const</span> { stateRef } = useSubscribedState(<span class="hljs-function">()=&gt;</span><span class="hljs-literal">true</span>, <span class="hljs-number">500</span>); <span class="hljs-comment">// or (k) =&gt; k == &quot;count&quot;</span>
+
+  <span class="hljs-keyword">const</span> { count } = stateRef.current;
+
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{count}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
+}</code></pre>
+				<pre><code class="language-javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">const</span> stateRef = useRef({<span class="hljs-attr">count</span>:<span class="hljs-number">0</span>, <span class="hljs-attr">me</span>:<span class="hljs-string">&quot;daniel&quot;</span>});
+  <span class="hljs-keyword">const</span> { Provider, value } = useProvider(stateRef);
+
+  <span class="hljs-comment">//only CountField will re-render when IncrementButton is clicked</span>
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CountField</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">IncrementButton</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span>
+  );
+}</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/contextprop.html" class="tsd-kind-icon">Context<wbr>Prop</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#reffunc" class="tsd-kind-icon">Ref<wbr>Func</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#shouldupdatefunc" class="tsd-kind-icon">Should<wbr>Update<wbr>Func</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#valueprop" class="tsd-kind-icon">Value<wbr>Prop</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#context" class="tsd-kind-icon">context</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#counter" class="tsd-kind-icon">Counter</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#modal" class="tsd-kind-icon">Modal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#mouseparentcomp" class="tsd-kind-icon">Mouse<wbr>Parent<wbr>Comp</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#mousepositiondisplay" class="tsd-kind-icon">Mouse<wbr>Position<wbr>Display</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#progressbar" class="tsd-kind-icon">Progress<wbr>Bar</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#simpleform" class="tsd-kind-icon">Simple<wbr>Form</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#spreadsheet" class="tsd-kind-icon">Spreadsheet</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#_set" class="tsd-kind-icon">_set</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#buildobj" class="tsd-kind-icon">build<wbr>Obj</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#debounce" class="tsd-kind-icon">debounce</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#default" class="tsd-kind-icon">default</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#del" class="tsd-kind-icon">del</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#expandobject" class="tsd-kind-icon">expand<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isdotted" class="tsd-kind-icon">is<wbr>Dotted</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isfunction" class="tsd-kind-icon">is<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isnumeric" class="tsd-kind-icon">is<wbr>Numeric</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isobject" class="tsd-kind-icon">is<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stringtoarrayprop" class="tsd-kind-icon">string<wbr>ToArray<wbr>Prop</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#useprovider" class="tsd-kind-icon">use<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#usesubscribedstate" class="tsd-kind-icon">use<wbr>Subscribed<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#usewrapper" class="tsd-kind-icon">use<wbr>Wrapper</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
