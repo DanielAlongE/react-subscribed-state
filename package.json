@@ -6,6 +6,7 @@
   "source": "src/index.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "lint": "./node_modules/.bin/eslint ./src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
