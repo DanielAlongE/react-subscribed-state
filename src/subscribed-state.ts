@@ -15,6 +15,12 @@ interface ContextProp {
     removeSubscriber?: (index:number)=>void
 }
 
+/**
+ * This is a debounce function
+ * @param fn function
+ * @param delay time in milliseconds
+ * @returns function that receives optional args
+ */
 const debounce = function (fn:unknown, delay: number = 100) {
   let timeoutID: number;
 
@@ -55,12 +61,20 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
       })
   }, [])
 
+  /**
+   * @param stateArray Array<[ string, ValueProp ]>
+   */
   const setStateFields = useCallback((stateArray: Array< [ string, ValueProp ] >) => {
     stateArray.forEach(([key, value]) => {
       setStateField(key, value);
     })
   }, [])
 
+  /**
+   * This will set a field in state
+   * @param key string
+   * @param value ValueProp
+   */
   const setStateField = useCallback((key:string, value:ValueProp) => {
     const previousValue = dotProp.get(stateRef.current, key, undefined)
     const val = isFunction(value) ? value(previousValue) : value
@@ -71,6 +85,12 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
     notifySubscribers(key, val, previousValue)
   }, [])
 
+  /**
+   * This will add a new subscriber
+   * @param referenceFunc reference reference function
+   * @param delay time in milliseconds
+   * @returns number reference index
+   */
   const addSubscriber = useCallback((referenceFunc: RefFunc, delay:number = 0):number => {
     const index = subscribersRef.current.length;
 
@@ -81,6 +101,10 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
     return -1;
   }, [])
 
+  /**
+   * This will remove a subscriber
+   * @param index number
+   */
   const removeSubscriber = useCallback((index) => {
     if (index > -1) {
       subscribersRef.current[index] = null
@@ -90,6 +114,11 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
   return { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber }
 }
 
+/**
+ * This hook will return a Provider and its value
+ * @param stateRef MutableRefObject<T>
+ * @returns {Provider, value}
+ */
 export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
   const { setStateField, setStateFields, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
   const { Provider } = context;
@@ -98,6 +127,11 @@ export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
   return { Provider, value };
 }
 
+/**
+ * This hook will expose subscried state objects and modifiers
+ * @param shouldUpdate function to determin if component should update
+ * @param debouce function
+ */
 export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, debouce:number = 0) {
   const { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber } = useContext(context);
   const [, setRender] = useState({})
