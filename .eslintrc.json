@@ -4,6 +4,7 @@
         "es6": true
     },
     "extends": [
+        "plugin:prettier/recommended",
         "plugin:react/recommended",
         "standard"
     ],
@@ -16,6 +17,7 @@
         "sourceType": "module"
     },
     "plugins": [
+        "prettier",
         "react",
         "@typescript-eslint"
     ],
