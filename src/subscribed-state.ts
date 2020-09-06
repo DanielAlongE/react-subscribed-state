@@ -22,7 +22,7 @@ interface ContextProp {
  * @returns function that receives optional args
  */
 const debounce = function (fn:unknown, delay: number = 100) {
-  let timeoutID: number;
+  let timeoutID: ReturnType<typeof setTimeout>;
 
   if (!isFunction(fn)) {
     throw new Error('Argument not a valid function');
