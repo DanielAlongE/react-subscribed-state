@@ -73,7 +73,7 @@
     "node_modules"
   ],
   "typedocOptions": {
-    "mode": "file",
+    "mode": "module",
     "out": "docs"
   }
 }
