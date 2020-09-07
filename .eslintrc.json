@@ -19,6 +19,7 @@
         "react",
         "@typescript-eslint"
     ],
+    "ignorePatterns": ["dist/**"],
     "rules": {
         "semi":"off"
     },
