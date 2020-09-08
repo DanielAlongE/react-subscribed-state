@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { render, act } from '@testing-library/react';
-import { useSubscribedState } from '../index';
+import { render, act, screen } from '@testing-library/react';
+import { useSubscribedState, SubscribedStateWrapper } from '../index';
 import { customRender } from './test-utils';
 
 function App () {
@@ -36,7 +36,7 @@ describe('see your life', () => {
 
     const Sample = () => hookFactory(customHook)()
 
-    const check = render(<Sample />);
+    render(<Sample />);
 
     const setCount = result.setCount as React.Dispatch<React.SetStateAction<number>>
 
@@ -44,7 +44,6 @@ describe('see your life', () => {
       setCount(x => x + 1);
     })
 
-    console.log(check)
     expect(result.count).toBe(1);
   })
 
@@ -72,8 +71,71 @@ describe('see your life', () => {
 
     act(() => {
       setStateField('one', 100)
+      setStateField('err.arr.0', 'oops!')
     })
 
     expect(result.stateRef.current.one).toBe(100);
+  })
+
+  it('useSubscribedState 2', () => {
+    let result: any;
+
+    // eslint-disable-next-line no-unused-vars
+    function hookFactory (hook: ()=>any) {
+      return function HookWrapper (): JSX.Element {
+        result = hook()
+        return null;
+      }
+    }
+
+    const customHook = () => {
+      const { stateRef, setStateField } = useSubscribedState(() => true);
+      return { stateRef, setStateField };
+    }
+
+    const Sample = () => hookFactory(customHook)()
+
+    customRender(<Sample />);
+
+    const setStateField = result.setStateField as (f: string, v: unknown)=> void
+
+    console.log('before', result.stateRef)
+    act(() => {
+      setStateField('one', 100)
+      setStateField('err.arr.0', 'oops!')
+    })
+    console.log('before', result.stateRef)
+    expect(result.stateRef.current.one).toBe(100);
+  })
+
+  it('SubscribedStateWrapper', () => {
+    /*    let result: any;
+
+    // eslint-disable-next-line no-unused-vars
+
+    function hookFactory (hook: ()=>any) {
+      return function HookWrapper (): JSX.Element {
+        result = hook()
+        return null;
+      }
+    }
+    */
+
+    const Sample = () => <SubscribedStateWrapper fields={['some']} component={({ stateRef }) => {
+      const { some = 'nothing' } = stateRef.current;
+      return <div data-testid="custom-element">{some}</div>
+    }} />
+
+    customRender(<Sample />);
+
+    (async function () {
+      const result = await screen.findByTestId('custom-element');
+      console.log(result);
+    })()
+
+    act(() => {
+    })
+
+    expect(100).toBe(100);
   })
 })

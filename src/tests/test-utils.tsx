@@ -10,5 +10,5 @@ function Provider ({ children }:{ children: any }) {
 }
 
 export const customRender = (ui: React.ReactElement, options?: any) => {
-  render(ui, { wrapper: Provider, ...options })
+  return render(ui, { wrapper: Provider, ...options })
 }

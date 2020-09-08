@@ -1,4 +1,5 @@
-import { createContext, useRef, useCallback, MutableRefObject, useContext, useEffect, useState } from 'react';
+import React, { createContext, useRef, useCallback, MutableRefObject, useContext, useEffect, useState } from 'react';
+
 import dotProp from './lib/dotProp';
 
 type ValueProp = unknown | ((s:any)=>any);
@@ -161,4 +162,18 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, debouce:numb
   }
 
   return { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber, reRender }
+}
+
+export function SubscribedStateWrapper ({
+  component: Comp,
+  fields
+}:{ component: React.FC< Partial<ReturnType<typeof useSubscribedState>> >, fields: string[] }) {
+  const { stateRef, setStateField, setStateFields } = useSubscribedState((key, value, previousValue) => {
+    if (fields.includes(key) && value !== previousValue) {
+      return true;
+    }
+    return false;
+  });
+
+  return React.createElement(Comp, { stateRef, setStateField, setStateFields })
 }
