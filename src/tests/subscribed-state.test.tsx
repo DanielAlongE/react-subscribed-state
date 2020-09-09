@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { render, act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, act, fireEvent } from '@testing-library/react';
 import { useSubscribedState, SubscribedState } from '../index';
 import { customRender } from './test-utils';
 
@@ -109,7 +108,7 @@ describe('see your life', () => {
     expect(result.stateRef.current.one).toBe(100);
   })
 
-  it('SubscribedState', () => {
+  it('SubscribedState', async () => {
     /*    let result: any;
 
     // eslint-disable-next-line no-unused-vars
@@ -126,22 +125,19 @@ describe('see your life', () => {
       {({ stateRef, setStateField }) => {
         const { some = 'nothing' } = stateRef.current;
         return (<>
-          <button onClick={() => setStateField('some', 'something')}>Click</button>
+          <button data-testid="btn" onClick={() => setStateField('some', 'something')}>Click</button>
           <div data-testid="custom-element">{some}</div>
         </>)
       }}
     </SubscribedState>)
 
-    customRender(<Sample />);
+    const { getByTestId, findByTestId } = customRender(<Sample />);
 
-    (async function () {
-      const result = await screen.findByTestId('custom-element');
-      console.log(result);
-    })()
+    fireEvent.click(getByTestId('btn'));
 
     act(() => {
     })
 
-    expect(100).toBe(100);
+    expect(findByTestId('custom-element')).toBe('something');
   })
 })
