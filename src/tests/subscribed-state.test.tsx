@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { render, act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { useSubscribedState, SubscribedState } from '../index';
 import { customRender } from './test-utils';
 
