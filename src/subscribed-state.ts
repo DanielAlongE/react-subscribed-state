@@ -164,10 +164,10 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, debouce:numb
   return { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber, reRender }
 }
 
-export function SubscribedStateWrapper ({
-  component: Comp,
+export function SubscribedState ({
+  children: Comp,
   fields
-}:{ component: React.FC< Partial<ReturnType<typeof useSubscribedState>> >, fields: string[] }) {
+}:{ children: React.FC< ContextProp >, fields: string[] }) {
   const { stateRef, setStateField, setStateFields } = useSubscribedState((key, value, previousValue) => {
     if (fields.includes(key) && value !== previousValue) {
       return true;
