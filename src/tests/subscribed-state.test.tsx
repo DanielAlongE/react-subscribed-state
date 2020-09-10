@@ -124,6 +124,7 @@ describe('see your life', () => {
     const Sample = () => (<SubscribedState fields={['some']}>
       {({ stateRef, setStateField }) => {
         const { some = 'nothing' } = stateRef.current;
+        console.log(some)
         return (<>
           <button data-testid="btn" onClick={() => setStateField('some', 'something')}>Click</button>
           <div data-testid="custom-element">{some}</div>
@@ -131,13 +132,12 @@ describe('see your life', () => {
       }}
     </SubscribedState>)
 
-    const { getByTestId, findByTestId } = customRender(<Sample />);
+    const { getByTestId, findByText } = customRender(<Sample />);
 
+    const expectedText = 'something';
     fireEvent.click(getByTestId('btn'));
-
-    act(() => {
-    })
-
-    expect(findByTestId('custom-element')).toBe('something');
+    const result = await findByText(expectedText);
+    // console.log(result)
+    expect(result.textContent).toBe(expectedText)
   })
 })
