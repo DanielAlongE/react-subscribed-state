@@ -138,17 +138,25 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, debouce:numb
   const [, setRender] = useState({})
 
   const idRef = useRef(-1)
+  const isMounted = useRef(false)
 
   useEffect(() => {
+    isMounted.current = true
+
     if (shouldUpdate && addSubscriber) {
       idRef.current = addSubscriber(referenceFunc, debouce)
     }
 
-    return () => removeSubscriber && removeSubscriber(idRef.current)
+    return () => {
+      isMounted.current = false
+      removeSubscriber && removeSubscriber(idRef.current)
+    }
   }, [])
 
   const reRender = useCallback(() => {
-    setRender({})
+    if (isMounted.current) {
+      setRender({})
+    }
   }, [])
 
   const referenceFunc: RefFunc = (key, value, preValue) => {
