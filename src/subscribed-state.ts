@@ -50,7 +50,6 @@ const isFunction = (val: unknown): val is Function => typeof val === 'function'
 
 function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
   const subscribersRef: MutableRefObject<Array<RefFunc | null>> = useRef([])
-  //    const debounceRef = useRef({})
 
   const notifySubscribers = useCallback((key:string, value:any, previousValue:any) => {
     subscribersRef.current
@@ -92,11 +91,11 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
    * @param delay time in milliseconds
    * @returns number reference index
    */
-  const addSubscriber = useCallback((referenceFunc: RefFunc, delay:number = 0):number => {
+  const addSubscriber = useCallback((referenceFunc: RefFunc):number => {
     const index = subscribersRef.current.length;
 
     if (isFunction(referenceFunc)) {
-      subscribersRef.current[index] = debounce(referenceFunc, delay)
+      subscribersRef.current[index] = referenceFunc
       return index;
     }
     return -1;
@@ -131,20 +130,22 @@ export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
 /**
  * This hook will expose subscried state objects and modifiers
  * @param shouldUpdate function to determin if component should update
- * @param debouce function
+ * @param delay milliseconds
  */
-export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, debouce:number = 0) {
+export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number = 0) {
   const { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber } = useContext(context);
   const [, setRender] = useState({})
 
   const idRef = useRef(-1)
   const isMounted = useRef(false)
 
+  const _render = debounce(() => setRender({}), delay)
+
   useEffect(() => {
     isMounted.current = true
 
     if (shouldUpdate && addSubscriber) {
-      idRef.current = addSubscriber(referenceFunc, debouce)
+      idRef.current = addSubscriber(referenceFunc)
     }
 
     return () => {
@@ -155,7 +156,7 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, debouce:numb
 
   const reRender = useCallback(() => {
     if (isMounted.current) {
-      setRender({})
+      _render()
     }
   }, [])
 
