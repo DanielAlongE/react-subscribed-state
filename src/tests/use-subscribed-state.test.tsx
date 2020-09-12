@@ -77,9 +77,9 @@ describe('see your life', () => {
     expect(result.stateRef.current.one).toBe(100);
   })
 
-  it('useSubscribedState 2', () => {
+  it('useSubscribedState check reRender', () => {
     let result: any;
-
+    const reRender = jest.fn();
     // eslint-disable-next-line no-unused-vars
     function hookFactory (hook: ()=>any) {
       return function HookWrapper (): JSX.Element {
@@ -89,7 +89,11 @@ describe('see your life', () => {
     }
 
     const customHook = () => {
-      const { stateRef, setStateField } = useSubscribedState(() => true);
+      const { stateRef, setStateField } = useSubscribedState((k) => {
+        console.log('reRender', k)
+        reRender(k)
+        return true
+      });
       return { stateRef, setStateField };
     }
 
@@ -99,13 +103,14 @@ describe('see your life', () => {
 
     const setStateField = result.setStateField as (f: string, v: unknown)=> void
 
-    console.log('before', result.stateRef)
     act(() => {
       setStateField('one', 100)
       setStateField('err.arr.0', 'oops!')
     })
-    console.log('before', result.stateRef)
-    expect(result.stateRef.current.one).toBe(100);
+
+    expect(reRender.mock.calls.length).toBe(2);
+    expect(reRender.mock.calls[0][0]).toBe('one');
+    expect(reRender.mock.calls[1][0]).toBe('err.arr.0');
   })
 
   it('SubscribedState', async () => {

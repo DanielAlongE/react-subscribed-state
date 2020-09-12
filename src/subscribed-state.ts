@@ -139,7 +139,7 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number
   const idRef = useRef(-1)
   const isMounted = useRef(false)
 
-  const _render = debounce(() => setRender({}), delay)
+  const _render = debounce(() => isMounted.current && setRender({}), delay)
 
   useEffect(() => {
     isMounted.current = true
@@ -155,9 +155,7 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number
   }, [])
 
   const reRender = useCallback(() => {
-    if (isMounted.current) {
-      _render()
-    }
+    _render()
   }, [])
 
   const referenceFunc: RefFunc = (key, value, preValue) => {
