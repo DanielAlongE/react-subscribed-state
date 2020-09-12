@@ -173,14 +173,15 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number
 
 export function SubscribedState ({
   children: Comp,
-  fields
-}:{ children: React.FC< ContextProp >, fields: string[] }) {
+  fields = [],
+  delay = 0
+}:{ children: React.FC< ContextProp >, fields?: string[], delay?: number }) {
   const { stateRef, setStateField, setStateFields } = useSubscribedState((key, value, previousValue) => {
     if (fields.includes(key) && value !== previousValue) {
       return true;
     }
     return false;
-  });
+  }, delay);
 
   return React.createElement(Comp, { stateRef, setStateField, setStateFields })
 }
