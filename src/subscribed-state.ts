@@ -20,26 +20,31 @@ interface ContextProp {
  * This is a debounce function
  * @param fn function
  * @param delay time in milliseconds
+ * @param limit debounce reset count
  * @returns function that receives optional args
  */
-const debounce = function (fn:unknown, delay: number = 100) {
+const debounce = function (fn:unknown, delay: number = 100, limit: number = 0) {
   let timeoutID: ReturnType<typeof setTimeout>;
+  let debounceCount = 0;
 
   if (!isFunction(fn)) {
     throw new Error('Argument not a valid function');
   }
 
   return function (...args: any[]) {
-    if (timeoutID) {
-      // console.log("debounce clear ", timeoutID)
-      clearTimeout(timeoutID);
-    }
+    debounceCount += 1;
+    clearTimeout(timeoutID);
 
-    timeoutID = setTimeout(() => {
-      // console.log("debounce end ", timeoutID)
-      fn(...args)
-    }, delay);
-    // console.log("debounce start ", timeoutID)
+    // if limit is reached reset debounce and run function
+    if (limit > 0 && debounceCount === limit) {
+      debounceCount = 0;
+      return fn(...args)
+    } else {
+      timeoutID = setTimeout(() => {
+        // console.log("debounce end ", timeoutID)
+        fn(...args)
+      }, delay);
+    }
   }
 }
 
@@ -131,15 +136,16 @@ export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
  * This hook will expose subscried state objects and modifiers
  * @param shouldUpdate function to determin if component should update
  * @param delay milliseconds
+ * @param debounceLimit this is the debounce count at which the debounce will be reset
  */
-export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number = 0) {
+export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number = 0, debounceLimit:number = 0) {
   const { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber } = useContext(context);
   const [, setRender] = useState({})
 
   const idRef = useRef(-1)
   const isMounted = useRef(false)
 
-  const _render = debounce(() => isMounted.current && setRender({}), delay)
+  const _render = debounce(() => isMounted.current && setRender({}), delay, debounceLimit)
 
   useEffect(() => {
     isMounted.current = true

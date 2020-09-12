@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { render, act, fireEvent } from '@testing-library/react';
+import { render, act, cleanup, fireEvent } from '@testing-library/react';
 import { useSubscribedState, SubscribedState } from '../index';
 import { customRender } from './test-utils';
 
@@ -9,6 +9,10 @@ function App () {
   return <div></div>
 }
 describe('see your life', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<App />, div);
@@ -47,19 +51,29 @@ describe('see your life', () => {
     expect(result.count).toBe(1);
   })
 
-  it('useSubscribedState 1', () => {
+  it('useSubscribedState 1', async () => {
     let result: any;
 
     // eslint-disable-next-line no-unused-vars
     function hookFactory (hook: ()=>any) {
       return function HookWrapper (): JSX.Element {
         result = hook()
-        return null;
+        const [text, setText] = useState('')
+
+        useEffect(() => {
+          setTimeout(() => setText('Done'), 2000)
+        }, [])
+        return <div>{text}</div>
       }
     }
 
+    let renderCount = 0;
     const customHook = () => {
-      const { stateRef, setStateField } = useSubscribedState(() => true);
+      const { stateRef, setStateField } = useSubscribedState(() => {
+        return true
+      }, 0, 2);
+      renderCount += 1;
+
       return { stateRef, setStateField };
     }
 
@@ -72,12 +86,15 @@ describe('see your life', () => {
     act(() => {
       setStateField('one', 100)
       setStateField('err.arr.0', 'oops!')
+      setStateField('err.arr.1', 'oops!')
     })
+
+    expect(renderCount).toBe(2);
 
     expect(result.stateRef.current.one).toBe(100);
   })
 
-  it('useSubscribedState check reRender', () => {
+  it('useSubscribedState check subscriber calls', () => {
     let result: any;
     const reRender = jest.fn();
     // eslint-disable-next-line no-unused-vars
