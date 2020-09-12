@@ -138,8 +138,19 @@ export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
  * @param delay milliseconds
  * @param debounceLimit this is the debounce count at which the debounce will be reset
  */
-export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number = 0, debounceLimit:number = 0) {
-  const { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber } = useContext(context);
+export function useSubscribedState (
+  shouldUpdate?:ShouldUpdateFunc,
+  delay:number = 0,
+  debounceLimit:number = 0
+) {
+  const {
+    stateRef,
+    setStateField,
+    setStateFields,
+    addSubscriber,
+    removeSubscriber
+  } = useContext(context);
+
   const [, setRender] = useState({})
 
   const idRef = useRef(-1)
@@ -180,14 +191,15 @@ export function useSubscribedState (shouldUpdate?:ShouldUpdateFunc, delay:number
 export function SubscribedState ({
   children: Comp,
   fields = [],
-  delay = 0
-}:{ children: React.FC< ContextProp >, fields?: string[], delay?: number }) {
+  delay = 0,
+  debounceLimit = 0
+}:{ children: React.FC< ContextProp >, fields?: string[], delay?: number, debounceLimit?: number }) {
   const { stateRef, setStateField, setStateFields } = useSubscribedState((key, value, previousValue) => {
     if (fields.includes(key) && value !== previousValue) {
       return true;
     }
     return false;
-  }, delay);
+  }, delay, debounceLimit);
 
   return React.createElement(Comp, { stateRef, setStateField, setStateFields })
 }
