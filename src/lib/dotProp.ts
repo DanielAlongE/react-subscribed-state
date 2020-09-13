@@ -1,14 +1,14 @@
 /* eslint-disable no-prototype-builtins */
 
-function isNumeric (value:string): boolean {
+export function isNumeric (value:string): boolean {
   return new RegExp(/^\d+$/).test(value);
 }
 
-function isObject (value:any): boolean {
+export function isObject (value:any): boolean {
   return value && value.constructor.name === 'Object';
 }
 
-function isDotted (value:string): boolean {
+export function isDotted (value:string): boolean {
   return value.indexOf('.') > -1;
 }
 
