@@ -10,6 +10,7 @@ export type ShouldUpdateFunc = (key:string, value?:any, previousValue?:any)=> bo
 
 interface ContextProp {
     stateRef?: MutableRefObject<any>
+    setState?: (value:ValueProp)=>any
     setStateField?: (field:string, value:ValueProp)=>any
     setStateFields?: (s: Array<[string, ValueProp]>)=>void
     addSubscriber?: (i:RefFunc, d?:number)=>number
