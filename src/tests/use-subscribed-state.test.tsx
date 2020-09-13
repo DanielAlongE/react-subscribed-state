@@ -69,24 +69,31 @@ describe('see your life', () => {
 
     let renderCount = 0;
     const customHook = () => {
-      const { stateRef, setStateField } = useSubscribedState(() => {
+      const { stateRef, setState, setStateField } = useSubscribedState(() => {
         return true
       }, 0, 2);
       renderCount += 1;
 
-      return { stateRef, setStateField };
+      return { stateRef, setState, setStateField };
     }
 
     const Sample = () => hookFactory(customHook)()
 
     customRender(<Sample />);
 
-    const setStateField = result.setStateField as (f: string, v: unknown)=> void
+    // const setStateField = result.setStateField as (f: string, v: unknown)=> void
+    const setState = result.setState as (v: unknown)=> void
 
     act(() => {
-      setStateField('one', 100)
-      setStateField('err.arr.0', 'oops!')
-      setStateField('err.arr.1', 'oops!')
+      // setStateField('one', 100)
+      // setStateField('err.arr.0', 'oops!')
+      // setStateField('err.arr.1', 'oops!')
+      setState({
+        one: 100,
+        err: {
+          arr: ['oops!', 'oops!']
+        }
+      })
     })
 
     expect(renderCount).toBe(2);

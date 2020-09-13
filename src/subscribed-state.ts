@@ -1,6 +1,7 @@
 import React, { createContext, useRef, useCallback, MutableRefObject, useContext, useEffect, useState } from 'react';
 
 import dotProp from './lib/dotProp';
+import { stateToKeyValuePairs } from './lib/helpers';
 
 type ValueProp = unknown | ((s:any)=>any);
 
@@ -68,12 +69,14 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
   }, [])
 
   /**
-   * @param stateArray Array<[ string, ValueProp ]>
+   * This will set a field in state
+   * @param state ValueProp
    */
-  const setStateFields = useCallback((stateArray: Array< [ string, ValueProp ] >) => {
-    stateArray.forEach(([key, value]) => {
-      setStateField(key, value);
-    })
+  const setState = useCallback((state:ValueProp) => {
+    const previousState = stateRef.current
+    const val = isFunction(state) ? state(previousState) : state
+
+    stateToKeyValuePairs(val).forEach(([field, value]) => setStateField(field, value))
   }, [])
 
   /**
@@ -117,7 +120,7 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
     }
   }, [])
 
-  return { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber }
+  return { stateRef, setState, setStateField, addSubscriber, removeSubscriber }
 }
 
 /**
@@ -126,9 +129,9 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
  * @returns {Provider, value}
  */
 export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
-  const { setStateField, setStateFields, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
+  const { setState, setStateField, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
   const { Provider } = context;
-  const value = { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber };
+  const value = { stateRef, setState, setStateField, addSubscriber, removeSubscriber };
 
   return { Provider, value };
 }
@@ -146,8 +149,8 @@ export function useSubscribedState (
 ) {
   const {
     stateRef,
+    setState,
     setStateField,
-    setStateFields,
     addSubscriber,
     removeSubscriber
   } = useContext(context);
@@ -186,7 +189,7 @@ export function useSubscribedState (
     }
   }
 
-  return { stateRef, setStateField, setStateFields, addSubscriber, removeSubscriber, reRender }
+  return { stateRef, setState, setStateField, addSubscriber, removeSubscriber, reRender }
 }
 
 export function SubscribedState ({
@@ -195,12 +198,12 @@ export function SubscribedState ({
   delay = 0,
   debounceLimit = 0
 }:{ children: React.FC< ContextProp >, fields?: string[], delay?: number, debounceLimit?: number }) {
-  const { stateRef, setStateField, setStateFields } = useSubscribedState((key, value, previousValue) => {
+  const { stateRef, setState, setStateField } = useSubscribedState((key, value, previousValue) => {
     if (fields.includes(key) && value !== previousValue) {
       return true;
     }
     return false;
   }, delay, debounceLimit);
 
-  return React.createElement(Comp, { stateRef, setStateField, setStateFields })
+  return React.createElement(Comp, { stateRef, setState, setStateField })
 }
