@@ -43,7 +43,7 @@ const debounce = function (fn:unknown, delay: number = 100, limit: number = 0) {
       return fn(...args)
     } else {
       timeoutID = setTimeout(() => {
-        // console.log("debounce end ", timeoutID)
+        debounceCount = 0;
         fn(...args)
       }, delay);
     }
