@@ -69,7 +69,8 @@ describe('see your life', () => {
 
     let renderCount = 0;
     const customHook = () => {
-      const { stateRef, setState, setStateField } = useSubscribedState(() => {
+      const { stateRef, setState, setStateField } = useSubscribedState((k) => {
+        console.log(k, 'customHook')
         return true
       }, 0, 2);
       renderCount += 1;
@@ -96,7 +97,7 @@ describe('see your life', () => {
       })
     })
 
-    expect(renderCount).toBe(2);
+    expect(renderCount).toBe(1);
 
     expect(result.stateRef.current.one).toBe(100);
   })

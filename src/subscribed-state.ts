@@ -25,6 +25,7 @@ interface ContextProp {
  * @param limit debounce reset count
  * @returns function that receives optional args
  */
+// eslint-disable-next-line no-unused-vars
 const debounce = function (fn:unknown, delay: number = 100, limit: number = 0) {
   let timeoutID: ReturnType<typeof setTimeout>;
   let debounceCount = 0;
@@ -43,8 +44,47 @@ const debounce = function (fn:unknown, delay: number = 100, limit: number = 0) {
       return fn(...args)
     } else {
       timeoutID = setTimeout(() => {
-        debounceCount = 0;
+        // console.log("debounce end ", timeoutID)
         fn(...args)
+      }, delay);
+    }
+  }
+}
+
+/**
+ * This is a debounce function
+ * @param fn function
+ * @param delay time in milliseconds
+ * @param limit debounce reset count
+ * @returns function that receives optional args
+ */
+const debounceWithSignal = function (fn:unknown, delay: number = 100, limit: number = 0, updateSignal = true) {
+  let timeoutID: ReturnType<typeof setTimeout>;
+  let debounceCount = 0;
+  let signal = false;
+
+  if (!isFunction(fn)) {
+    throw new Error('Argument not a valid function');
+  }
+
+  return function (...args: any[]) {
+    debounceCount += 1;
+    clearTimeout(timeoutID);
+
+    if (updateSignal) {
+      signal = updateSignal
+    }
+
+    // if limit is reached reset debounce and run function
+    if (limit > 0 && debounceCount === limit) {
+      debounceCount = 0;
+      signal && fn(...args)
+      signal = false
+    } else {
+      timeoutID = setTimeout(() => {
+        // console.log("debounce end ", timeoutID)
+        signal && fn(...args)
+        signal = false
       }, delay);
     }
   }
@@ -160,7 +200,7 @@ export function useSubscribedState (
   const idRef = useRef(-1)
   const isMounted = useRef(false)
 
-  const _render = debounce(() => isMounted.current && setRender({}), delay, debounceLimit)
+  const _render = (updateSignal:boolean = true) => debounceWithSignal(() => isMounted.current && updateSignal && setRender({}), delay, debounceLimit, updateSignal)
 
   useEffect(() => {
     isMounted.current = true
@@ -180,12 +220,10 @@ export function useSubscribedState (
   }, [])
 
   const referenceFunc: RefFunc = (key, value, preValue) => {
+    let updateSignal: boolean = false;
     if (shouldUpdate) {
-      const result = shouldUpdate(key, value, preValue)
-
-      if (result) {
-        reRender();
-      }
+      updateSignal = shouldUpdate(key, value, preValue)
+      _render(updateSignal)
     }
   }
 
