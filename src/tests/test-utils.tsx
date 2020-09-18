@@ -12,3 +12,7 @@ export function Provider ({ children }:{ children: any }) {
 export const renderWithProvider = (ui: React.ReactElement, options?: any) => {
   return render(ui, { wrapper: Provider, ...options })
 }
+
+export const sleep = (delay:number) => {
+  return new Promise(resolve => setTimeout(resolve, delay))
+}

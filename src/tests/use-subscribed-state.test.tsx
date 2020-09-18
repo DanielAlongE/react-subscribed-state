@@ -2,18 +2,9 @@
 import React, { useEffect } from 'react';
 import { act, cleanup, fireEvent } from '@testing-library/react';
 import { useSubscribedState, SubscribedState, ContextProp } from '../index';
-import { renderWithProvider } from './test-utils';
+import { renderWithProvider, sleep } from './test-utils';
 
 describe('useSubscribedState', () => {
-  let result: any;
-  function hookFactory (hook: ()=>any) {
-    return function HookWrapper (): JSX.Element {
-      // eslint-disable-next-line no-unused-vars
-      result = hook()
-      return null
-    }
-  }
-
   afterEach(() => {
     cleanup()
   })
@@ -73,7 +64,12 @@ describe('useSubscribedState', () => {
   })
 
   it('useSubscribedState 1', async () => {
-    let result: any;
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
+    }
 
     let renderCount = 0;
     const customHook = () => {
@@ -86,12 +82,12 @@ describe('useSubscribedState', () => {
       return { stateRef, setState, setStateField };
     }
 
-    const Sample = () => hookFactory(customHook)()
+    const Sample = () => hookFactory(customHook)
 
     renderWithProvider(<Sample />);
 
     // const setStateField = result.setStateField as (f: string, v: unknown)=> void
-    const setState = result.setState as (v: unknown)=> void
+    const setState = hookObj.setState as (v: unknown)=> void
 
     act(() => {
       // setStateField('one', 100)
@@ -107,7 +103,7 @@ describe('useSubscribedState', () => {
 
     expect(renderCount).toBe(1);
 
-    expect(result.stateRef.current.one).toBe(100);
+    expect(hookObj.stateRef.current.one).toBe(100);
   })
 
   it('useSubscribedState check subscriber calls', () => {
@@ -136,8 +132,9 @@ describe('useSubscribedState', () => {
 
     const setStateField = result.setStateField as (f: string, v: unknown)=> void
 
-    act(() => {
+    act(async () => {
       setStateField('one', 100)
+      await sleep(100)
       setStateField('err.arr.0', 'oops!')
     })
 
