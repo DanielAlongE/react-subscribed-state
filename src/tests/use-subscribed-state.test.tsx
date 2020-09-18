@@ -1,78 +1,86 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { render, act, cleanup, fireEvent } from '@testing-library/react';
-import { useSubscribedState, SubscribedState } from '../index';
-import { customRender } from './test-utils';
+import React, { useEffect } from 'react';
+import { act, cleanup, fireEvent } from '@testing-library/react';
+import { useSubscribedState, SubscribedState, ContextProp } from '../index';
+import { renderWithProvider } from './test-utils';
 
-function App () {
-  return <div></div>
-}
-describe('see your life', () => {
+describe('useSubscribedState', () => {
+  let result: any;
+  function hookFactory (hook: ()=>any) {
+    return function HookWrapper (): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      result = hook()
+      return null
+    }
+  }
+
   afterEach(() => {
     cleanup()
   })
 
   it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+    renderWithProvider(<div></div>)
   });
 
-  it('something crazy', () => {
-    expect(1).toBe(1);
-  })
-
-  it('hooks', () => {
-    let result: any;
-
-    // eslint-disable-next-line no-unused-vars
-    function hookFactory (hook: ()=>any) {
-      return function HookWrapper (): JSX.Element {
-        result = hook()
-        return null;
-      }
+  it('counter using setStateField', () => {
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
     }
 
     const customHook = () => {
-      const [count, setCount] = useState(0);
-      return { count, setCount };
+      const { stateRef, setStateField } = useSubscribedState(() => true)
+      return { stateRef, setStateField }
     }
 
-    const Sample = () => hookFactory(customHook)()
+    const App = () => hookFactory(customHook)
 
-    render(<Sample />);
+    renderWithProvider(<App />);
 
-    const setCount = result.setCount as React.Dispatch<React.SetStateAction<number>>
+    const setStateField = hookObj.setStateField as ContextProp['setStateField']
+    let counter = 0
 
     act(() => {
-      setCount(x => x + 1);
+      setStateField('counter', 1);
+      setStateField('counter', (x:number) => {
+        counter = x
+        return x
+      });
     })
 
-    expect(result.count).toBe(1);
+    expect(counter).toBe(1);
+  })
+
+  it('counter check reRender', async () => {
+    const App = () => {
+      const { stateRef, setStateField } = useSubscribedState(() => true)
+      const { counter = 0 } = stateRef.current
+
+      useEffect(() => {
+        setStateField('counter', 1)
+      }, [])
+
+      return <div>{counter}</div>
+    }
+
+    const { findByText } = renderWithProvider(<App />);
+    const expected = '1'
+    const result = await findByText(expected)
+
+    expect(result.textContent).toBe(expected);
   })
 
   it('useSubscribedState 1', async () => {
     let result: any;
-
-    // eslint-disable-next-line no-unused-vars
-    function hookFactory (hook: ()=>any) {
-      return function HookWrapper (): JSX.Element {
-        result = hook()
-        const [text, setText] = useState('')
-
-        useEffect(() => {
-          setTimeout(() => setText('Done'), 2000)
-        }, [])
-        return <div>{text}</div>
-      }
-    }
 
     let renderCount = 0;
     const customHook = () => {
       const { stateRef, setState, setStateField } = useSubscribedState((k) => {
         console.log(k, 'customHook')
         return true
-      }, 0, 2);
+      });
       renderCount += 1;
 
       return { stateRef, setState, setStateField };
@@ -80,7 +88,7 @@ describe('see your life', () => {
 
     const Sample = () => hookFactory(customHook)()
 
-    customRender(<Sample />);
+    renderWithProvider(<Sample />);
 
     // const setStateField = result.setStateField as (f: string, v: unknown)=> void
     const setState = result.setState as (v: unknown)=> void
@@ -124,7 +132,7 @@ describe('see your life', () => {
 
     const Sample = () => hookFactory(customHook)()
 
-    customRender(<Sample />);
+    renderWithProvider(<Sample />);
 
     const setStateField = result.setStateField as (f: string, v: unknown)=> void
 
@@ -162,7 +170,7 @@ describe('see your life', () => {
       }}
     </SubscribedState>)
 
-    const { getByTestId, findByText } = customRender(<Sample />);
+    const { getByTestId, findByText } = renderWithProvider(<Sample />);
 
     const expectedText = 'something';
     fireEvent.click(getByTestId('btn'));
