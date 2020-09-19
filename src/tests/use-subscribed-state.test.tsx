@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { act, cleanup, fireEvent } from '@testing-library/react';
 import { useSubscribedState, SubscribedState, ContextProp } from '../index';
-import { renderWithProvider, sleep } from './test-utils';
+import { renderWithProvider } from './test-utils';
 
 describe('useSubscribedState', () => {
   afterEach(() => {
@@ -74,7 +74,6 @@ describe('useSubscribedState', () => {
     let renderCount = 0;
     const customHook = () => {
       const { stateRef, setState, setStateField } = useSubscribedState((k) => {
-        console.log(k, 'customHook')
         return true
       });
       renderCount += 1;
@@ -86,19 +85,19 @@ describe('useSubscribedState', () => {
 
     renderWithProvider(<Sample />);
 
-    // const setStateField = result.setStateField as (f: string, v: unknown)=> void
-    const setState = hookObj.setState as (v: unknown)=> void
+    const setStateField = hookObj.setStateField as ContextProp['setStateField']
+    // const setState = hookObj.setState as ContextProp['setState']
 
     act(() => {
-      // setStateField('one', 100)
-      // setStateField('err.arr.0', 'oops!')
-      // setStateField('err.arr.1', 'oops!')
-      setState({
-        one: 100,
-        err: {
-          arr: ['oops!', 'oops!']
-        }
-      })
+      setStateField('one', 100)
+      setStateField('err.arr.0', 'oops!')
+      setStateField('err.arr.1', 'oops!')
+      // setState({
+      //   one: 100,
+      //   err: {
+      //     arr: ['oops!', 'oops!']
+      //   }
+      // })
     })
 
     expect(renderCount).toBe(1);
@@ -107,14 +106,12 @@ describe('useSubscribedState', () => {
   })
 
   it('useSubscribedState check subscriber calls', () => {
-    let result: any;
     const reRender = jest.fn();
-    // eslint-disable-next-line no-unused-vars
-    function hookFactory (hook: ()=>any) {
-      return function HookWrapper (): JSX.Element {
-        result = hook()
-        return null;
-      }
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
     }
 
     const customHook = () => {
@@ -126,15 +123,14 @@ describe('useSubscribedState', () => {
       return { stateRef, setStateField };
     }
 
-    const Sample = () => hookFactory(customHook)()
+    const Sample = () => hookFactory(customHook)
 
     renderWithProvider(<Sample />);
 
-    const setStateField = result.setStateField as (f: string, v: unknown)=> void
+    const setStateField = hookObj.setStateField as ContextProp['setStateField']
 
-    act(async () => {
+    act(() => {
       setStateField('one', 100)
-      await sleep(100)
       setStateField('err.arr.0', 'oops!')
     })
 
