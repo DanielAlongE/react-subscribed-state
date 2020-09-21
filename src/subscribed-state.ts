@@ -210,3 +210,12 @@ export function SubscribedState ({
 
   return React.createElement(Comp, { stateRef, setState, setStateField })
 }
+
+/**
+ * @param children
+ * @param initialState
+ */
+export const Provider = ({ children, initialState }: {children: any, initialState: any}) => {
+  const { Provider, value } = useProvider(initialState)
+  return React.createElement(Provider, { value }, children)
+}
