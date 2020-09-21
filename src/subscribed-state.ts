@@ -212,10 +212,10 @@ export function SubscribedState ({
 }
 
 /**
- * @param children
- * @param initialState
+ * @param children any
+ * @param initialState Record<string, any>
  */
-export const Provider = ({ children, initialState }: {children: any, initialState: any}) => {
+export const Provider = ({ children, initialState }: {children: any, initialState: Record<string, any>}) => {
   const { Provider, value } = useProvider(initialState)
   return React.createElement(Provider, { value }, children)
 }

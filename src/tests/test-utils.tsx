@@ -1,22 +1,19 @@
-import React, { useRef } from 'react';
-import { useProvider, useProvider2 } from '../index';
+import React from 'react';
+import { Provider } from '../index';
 import { render } from '@testing-library/react';
 
-export function Provider1 ({ children }:{ children: any }) {
-  const stateRef = useRef({});
-  const { Provider, value } = useProvider(stateRef)
+// export function Provider ({ children }:{ children: any }) {
+//   const { Provider, value } = useProvider({})
 
-  return (<Provider value={value}>{children}</Provider>)
-}
+//   return (<Provider value={value}>{children}</Provider>)
+// }
 
-export function Provider ({ children }:{ children: any }) {
-  const { SubscribedStateProvider } = useProvider2({})
-
-  return (<SubscribedStateProvider>{children}</SubscribedStateProvider>)
+const TestProvider = ({ children }:{ children: any }) => {
+  return <Provider initialState={{}}>{children}</Provider>
 }
 
 export const renderWithProvider = (ui: React.ReactElement, options?: any) => {
-  return render(ui, { wrapper: Provider, ...options })
+  return render(ui, { wrapper: TestProvider, ...options })
 }
 
 export const sleep = (delay:number) => {
