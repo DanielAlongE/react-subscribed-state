@@ -136,23 +136,42 @@ export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
 }
 
 /**
+ * This hook will return a Provider and its value
+ * @param stateRef MutableRefObject<T>
+ * @returns {Provider, value}
+ */
+export function useProvider2<T = any> (initialState: T) {
+  const stateRef = useRef(initialState)
+  const { setState, setStateField, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
+  const { Provider } = context;
+  const value = { stateRef, setState, setStateField, addSubscriber, removeSubscriber };
+
+  const SubscribedStateProvider = ({ children }: {children: any}) => React.createElement(Provider, { value }, children)
+
+  return { Provider, value, SubscribedStateProvider };
+}
+
+/**
  * This hook will expose subscried state objects and modifiers
  * @param shouldUpdate function to determin if component should update
  * @param delay milliseconds
  * @param debounceLimit this is the debounce count at which the debounce will be reset
  */
-export function useSubscribedState (
+export function useSubscribedState<T = any> (
   shouldUpdate?:ShouldUpdateFunc,
   delay:number = 0,
   debounceLimit:number = 0
 ) {
+  const contextObject = useContext(context);
+
   const {
-    stateRef,
     setState,
     setStateField,
     addSubscriber,
     removeSubscriber
-  } = useContext(context);
+  } = contextObject;
+
+  const stateRef = contextObject.stateRef as MutableRefObject<T>
 
   const [, setRender] = useState({})
 
