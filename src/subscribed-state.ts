@@ -127,28 +127,13 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
  * @param stateRef MutableRefObject<T>
  * @returns {Provider, value}
  */
-export function useProvider<T = any> (stateRef: MutableRefObject<T>) {
-  const { setState, setStateField, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
-  const { Provider } = context;
-  const value = { stateRef, setState, setStateField, addSubscriber, removeSubscriber };
-
-  return { Provider, value };
-}
-
-/**
- * This hook will return a Provider and its value
- * @param stateRef MutableRefObject<T>
- * @returns {Provider, value}
- */
-export function useProvider2<T = any> (initialState: T) {
+export function useProvider<T = any> (initialState: T) {
   const stateRef = useRef(initialState)
   const { setState, setStateField, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
   const { Provider } = context;
   const value = { stateRef, setState, setStateField, addSubscriber, removeSubscriber };
 
-  const SubscribedStateProvider = ({ children }: {children: any}) => React.createElement(Provider, { value }, children)
-
-  return { Provider, value, SubscribedStateProvider };
+  return { Provider, value };
 }
 
 /**
