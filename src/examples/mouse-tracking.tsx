@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useProvider, useSubscribedState } from '../subscribed-state';
 
 const MouseParentComp = ({ children }:{children:any}) => {
@@ -49,8 +49,7 @@ const MousePositionDisplay = () => {
 }
 
 export default function () {
-  const stateRef = useRef({ x: 0, y: 0 });
-  const { Provider, value } = useProvider(stateRef);
+  const { Provider, value } = useProvider({ x: 0, y: 0 });
 
   return (
     <Provider value={value}>
