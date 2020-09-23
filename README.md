@@ -17,15 +17,14 @@ npm i @alonge/subscribed-state
 
 ## Setup
 ```javascript
-import { useProvider } from "@alonge/subscribed-state";
-import { useRef } from "react";
+import { Provider } from "@alonge/subscribed-state";
 
 function(){
-  const stateRef = useRef({count:0, me:"daniel"}); //define default values
-  const { Provider, value } = useProvider(stateRef);
+  const initialState = {count:0, me:"daniel"}; //define initial state
+  const { Provider, value } = useProvider(initialState);
 
   return (
-    <Provider value={value}>
+    <Provider initialState={initialState}>
       
     </Provider>
   );
@@ -59,13 +58,12 @@ function CountField(){
 ```javascript
 
 function(){
-  const stateRef = useRef({count:0, me:"daniel"});
-  const { Provider, value } = useProvider(stateRef);
+  const initialState = {count:0, me:"daniel"};
 
   //only CountField will re-render when IncrementButton is clicked
 
   return (
-    <Provider value={value}>
+    <Provider initialState={initialState}>
       <CountField />
       <IncrementButton />
     </Provider>
