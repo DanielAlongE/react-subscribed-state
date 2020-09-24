@@ -199,14 +199,15 @@ export function SubscribedState ({
   children: Comp,
   fields = [],
   delay = 0,
-  debounceLimit = 0
-}:{ children: React.FC< ContextProp >, fields?: string[], delay?: number, debounceLimit?: number }) {
-  const { stateRef, setState, setStateField } = useSubscribedState((key, value, previousValue) => {
+  debounceLimit = 0,
+  shouldUpdate = (key, value, previousValue) => {
     if (fields.includes(key) && value !== previousValue) {
       return true;
     }
     return false;
-  }, delay, debounceLimit);
+  }
+}:{ children: React.FC< ContextProp >, fields?: string[], delay?: number, debounceLimit?: number, shouldUpdate?:ShouldUpdateFunc }) {
+  const { stateRef, setState, setStateField } = useSubscribedState(shouldUpdate, delay, debounceLimit);
 
   return React.createElement(Comp, { stateRef, setState, setStateField })
 }
