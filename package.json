@@ -19,14 +19,15 @@
   "keywords": [
     "hooks",
     "react",
+    "react native",
     "useState"
   ],
   "author": "Dan Alonge <https://twitter.com/DanAlongE>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DanielAlongE/subscribed-state/issues"
+    "url": "https://github.com/DanielAlongE/react-subscribed-state/issues"
   },
-  "homepage": "https://github.com/DanielAlongE/subscribed-state#readme",
+  "homepage": "https://github.com/DanielAlongE/react-subscribed-state#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/preset-env": "^7.11.5",
