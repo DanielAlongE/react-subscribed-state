@@ -1,7 +1,7 @@
-# subscribed-state
+# react-subscribed-state
 A custom state reactivity pattern in React.js
 
-With subscribed-state, components can subscribe to fields in the state such that they are able to re-render when the values of such fields change. This will go a long way to eliminate wasted renders as only the components that are required to rerender will do so.
+With react-subscribed-state, components can subscribe to fields in the state such that they are able to re-render when the values of such fields change. This will go a long way to eliminate wasted renders as only the components that are required to rerender will do so.
 
 The following are some examples of use cases:
 - Complex forms with several moving parts such as Error Messages and Computed properties
@@ -12,12 +12,12 @@ The following are some examples of use cases:
 ## Install
 
 ```sh
-npm i @alonge/subscribed-state
+npm i @alonge/react-subscribed-state
 ```
 
 ## Setup
 ```javascript
-import { Provider } from "@alonge/subscribed-state";
+import { Provider } from "@alonge/react-subscribed-state";
 
 function(){
   const initialState = {count:0, me:"daniel"}; //define initial state
@@ -32,7 +32,7 @@ function(){
 ```
 
 ```javascript
-import { useSubscribedState } from "@alonge/subscribed-state";
+import { useSubscribedState } from "@alonge/react-subscribed-state";
 
 function IncrementButton(){
   const { setStateField } = useSubscribedState();
