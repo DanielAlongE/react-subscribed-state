@@ -1,16 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 
-export function isNumeric (value:string): boolean {
-  return new RegExp(/^\d+$/).test(value);
-}
-
-export function isObject (value:any): boolean {
-  return value && value.constructor.name === 'Object';
-}
-
-export function isDotted (value:string): boolean {
-  return value.indexOf('.') > -1;
-}
+import { isDotted, isNumeric, isObject } from './helpers';
 
 export function stringToArrayProp (param: string): any[] {
   return param.split('.').map(o => {
