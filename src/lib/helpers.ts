@@ -25,3 +25,14 @@ export function stateToKeyValuePairs (obj: ObjectOrArray) {
 
   return result;
 }
+
+export function stringToArrayProp (param:string): any[] {
+  const result = param.split('.').map(o => {
+    if (isNumeric(o)) {
+      return +o;
+    }
+    return o;
+  });
+  console.log({ param, result })
+  return result
+}

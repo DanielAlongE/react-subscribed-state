@@ -1,18 +1,7 @@
-/* eslint-disable no-prototype-builtins */
-
-import { isDotted, isNumeric, isObject } from './helpers';
-
-export function stringToArrayProp (param: string): any[] {
-  return param.split('.').map(o => {
-    if (isNumeric(o)) {
-      return parseInt(o);
-    }
-    return o;
-  });
-}
+import { isDotted, isNumeric, isObject, stringToArrayProp } from './helpers';
 
 export function buildObj (dots:string, last:any) {
-  const props = stringToArrayProp(dots).reverse();
+  const props = dots ? stringToArrayProp(dots).reverse() : [];
   let copy:any = last;
 
   props.forEach((o, index) => {
@@ -82,7 +71,7 @@ function get<T> (obj:any, props:any[] | string, def:any): T {
   }
 
   for (const key of props) {
-    if ((isObject(result) || Array.isArray(result)) && result.hasOwnProperty(key)) {
+    if ((isObject(result) || Array.isArray(result)) && Object.prototype.hasOwnProperty.call(result, key)) {
       result = result[key];
     } else {
       return def;
