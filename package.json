@@ -1,6 +1,6 @@
 {
   "name": "react-subscribed-state",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A custom reactivity pattern in React.js",
   "main": "dist/index.js",
   "source": "src/index.ts",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.12.1",
     "@testing-library/react": "^11.0.2",
     "@types/jest": "^26.0.13",
     "@types/react": "^16.9.46",

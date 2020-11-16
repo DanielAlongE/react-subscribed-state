@@ -10,11 +10,11 @@ export type RefFunc = (key:string, value?:any, previousValue?:any)=> void
 export type ShouldUpdateFunc = (key:string, value?:any, previousValue?:any)=> boolean
 
 export interface ContextProp {
-    stateRef?: MutableRefObject<any>
-    setState?: (value:ValueProp)=>any
-    setStateField?: (field:string, value:ValueProp)=>any
-    addSubscriber?: (i:RefFunc, d?:number)=>number
-    removeSubscriber?: (index:number)=>void
+    stateRef: MutableRefObject<any>
+    setState: (value:ValueProp)=>any
+    setStateField: (field:string, value:ValueProp)=>any
+    addSubscriber: (i:RefFunc, d?:number)=>number
+    removeSubscriber: (index:number)=>void
 }
 
 /**
@@ -49,7 +49,7 @@ const debounce = function (fn:unknown, delay: number = 100, limit: number = 0) {
   }
 }
 
-export const context = createContext<ContextProp>({})
+export const context = createContext<ContextProp>(null)
 
 // eslint-disable-next-line no-undef
 const isFunction = (val: unknown): val is Function => typeof val === 'function'
@@ -207,9 +207,9 @@ export function SubscribedState ({
     return false;
   }
 }:{ children: React.FC< ContextProp >, fields?: string[], delay?: number, debounceLimit?: number, shouldUpdate?:ShouldUpdateFunc }) {
-  const { stateRef, setState, setStateField } = useSubscribedState(shouldUpdate, delay, debounceLimit);
+  const { stateRef, setState, setStateField, addSubscriber, removeSubscriber } = useSubscribedState(shouldUpdate, delay, debounceLimit);
 
-  return React.createElement(Comp, { stateRef, setState, setStateField })
+  return React.createElement(Comp, { stateRef, setState, setStateField, addSubscriber, removeSubscriber })
 }
 
 /**

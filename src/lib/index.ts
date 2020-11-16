@@ -1,1 +1,2 @@
-export * from './dotProp'
+export * as dotProp from './dotProp'
+export * from './helpers'
