@@ -12,12 +12,12 @@ The following are some examples of use cases:
 ## Install
 
 ```sh
-npm i @alonge/react-subscribed-state
+npm i react-subscribed-state
 ```
 
 ## Setup
 ```javascript
-import { Provider } from "@alonge/react-subscribed-state";
+import { Provider } from "react-subscribed-state";
 
 function(){
   const initialState = {count:0, me:"daniel"}; //define initial state
@@ -32,7 +32,7 @@ function(){
 ```
 
 ```javascript
-import { useSubscribedState } from "@alonge/react-subscribed-state";
+import { useSubscribedState } from "react-subscribed-state";
 
 function IncrementButton(){
   const { setStateField } = useSubscribedState();
