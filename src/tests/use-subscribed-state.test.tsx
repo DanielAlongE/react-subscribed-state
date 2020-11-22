@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { act, cleanup, fireEvent } from '@testing-library/react';
 import { useSubscribedState, SubscribedState, ContextProp } from '../index';
-import { renderWithProvider } from './test-utils';
+import { renderWithProvider, sleep } from './test-utils';
 
 describe('useSubscribedState', () => {
   afterEach(() => {
@@ -170,5 +170,36 @@ describe('useSubscribedState', () => {
     const result = await findByText(expectedText);
     // console.log(result)
     expect(result.textContent).toBe(expectedText)
+  })
+
+  it('getState returns entire state', () => {
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
+    }
+
+    const customHook = () => {
+      const { getState, setState } = useSubscribedState(() => true)
+      return { getState, setState }
+    }
+
+    const App = () => hookFactory(customHook)
+
+    renderWithProvider(<App />);
+
+    const getState = hookObj.getState as ContextProp['getState']
+    const setState = hookObj.setState as ContextProp['setState']
+
+    let state:unknown
+
+    act(async () => {
+      setState({ one: 1, two: 2, three: 3 });
+      await sleep(1000)
+      state = getState()
+    })
+
+    expect(Object.keys(state).length).toBe(3);
   })
 })
