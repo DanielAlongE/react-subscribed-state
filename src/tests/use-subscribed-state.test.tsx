@@ -116,7 +116,6 @@ describe('useSubscribedState', () => {
 
     const customHook = () => {
       const { stateRef, setStateField } = useSubscribedState((k) => {
-        console.log('reRender', k)
         reRender(k)
         return true
       });
@@ -155,7 +154,6 @@ describe('useSubscribedState', () => {
     const Sample = () => (<SubscribedState fields={['some']}>
       {({ stateRef, setStateField }) => {
         const { some = 'nothing' } = stateRef.current;
-        console.log(some)
         return (<>
           <button data-testid="btn" onClick={() => setStateField('some', 'something')}>Click</button>
           <div data-testid="custom-element">{some}</div>
@@ -168,7 +166,6 @@ describe('useSubscribedState', () => {
     const expectedText = 'something';
     fireEvent.click(getByTestId('btn'));
     const result = await findByText(expectedText);
-    // console.log(result)
     expect(result.textContent).toBe(expectedText)
   })
 
