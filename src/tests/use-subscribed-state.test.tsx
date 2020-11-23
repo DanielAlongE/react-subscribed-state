@@ -116,7 +116,6 @@ describe('useSubscribedState', () => {
 
     const customHook = () => {
       const { stateRef, setStateField } = useSubscribedState((k) => {
-        console.log('reRender', k)
         reRender(k)
         return true
       });
@@ -155,7 +154,6 @@ describe('useSubscribedState', () => {
     const Sample = () => (<SubscribedState fields={['some']}>
       {({ stateRef, setStateField }) => {
         const { some = 'nothing' } = stateRef.current;
-        console.log(some)
         return (<>
           <button data-testid="btn" onClick={() => setStateField('some', 'something')}>Click</button>
           <div data-testid="custom-element">{some}</div>
@@ -168,7 +166,74 @@ describe('useSubscribedState', () => {
     const expectedText = 'something';
     fireEvent.click(getByTestId('btn'));
     const result = await findByText(expectedText);
-    // console.log(result)
     expect(result.textContent).toBe(expectedText)
+  })
+
+  it('getState returns entire state', () => {
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
+    }
+
+    const customHook = () => {
+      const { getState, setState } = useSubscribedState(() => true)
+      return { getState, setState }
+    }
+
+    const App = () => hookFactory(customHook)
+
+    renderWithProvider(<App />);
+
+    const getState = hookObj.getState as ContextProp['getState']
+
+    let state:any
+
+    act(() => {
+      state = getState()
+    })
+
+    expect(JSON.stringify(state)).toBe('{}');
+  })
+
+  it('getState returns fields from state', () => {
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
+    }
+
+    const customHook = () => {
+      const { getState, setState } = useSubscribedState(() => true)
+      return { getState, setState }
+    }
+
+    const App = () => hookFactory(customHook)
+
+    renderWithProvider(<App />);
+
+    const getState = hookObj.getState as ContextProp['getState']
+    const setState = hookObj.setState as ContextProp['setState']
+
+    let one:number
+    let two:number
+    let three:number
+    let notFound:any
+
+    act(() => {
+      setState({ one: 1, two: 2, three: 3 });
+      // await sleep(1000)
+      one = getState('one')
+      two = getState('two')
+      three = getState('three')
+      notFound = getState('notFound', 123)
+    })
+
+    expect(one).toBe(1);
+    expect(two).toBe(2);
+    expect(three).toBe(3);
+    expect(notFound).toBe(123);
   })
 })
