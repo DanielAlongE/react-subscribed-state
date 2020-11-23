@@ -190,16 +190,50 @@ describe('useSubscribedState', () => {
     renderWithProvider(<App />);
 
     const getState = hookObj.getState as ContextProp['getState']
-    const setState = hookObj.setState as ContextProp['setState']
 
     let state:any
 
     act(() => {
-      setState({ one: 1, two: 2, three: 3 });
-      // await sleep(1000)
       state = getState()
     })
 
     expect(JSON.stringify(state)).toBe('{}');
+  })
+
+  it('getState returns fields from state', () => {
+    let hookObj: any;
+    function hookFactory (hook: ()=>any): JSX.Element {
+      // eslint-disable-next-line no-unused-vars
+      hookObj = hook()
+      return null
+    }
+
+    const customHook = () => {
+      const { getState, setState } = useSubscribedState(() => true)
+      return { getState, setState }
+    }
+
+    const App = () => hookFactory(customHook)
+
+    renderWithProvider(<App />);
+
+    const getState = hookObj.getState as ContextProp['getState']
+    const setState = hookObj.setState as ContextProp['setState']
+
+    let one:number
+    let two:number
+    let three:number
+
+    act(() => {
+      setState({ one: 1, two: 2, three: 3 });
+      // await sleep(1000)
+      one = getState('one')
+      two = getState('two')
+      three = getState('three')
+    })
+
+    expect(one).toBe(1);
+    expect(two).toBe(2);
+    expect(three).toBe(3);
   })
 })
