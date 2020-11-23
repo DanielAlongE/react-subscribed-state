@@ -220,6 +220,7 @@ describe('useSubscribedState', () => {
     let one:number
     let two:number
     let three:number
+    let notFound:any
 
     act(() => {
       setState({ one: 1, two: 2, three: 3 });
@@ -227,10 +228,12 @@ describe('useSubscribedState', () => {
       one = getState('one')
       two = getState('two')
       three = getState('three')
+      notFound = getState('notFound', 123)
     })
 
     expect(one).toBe(1);
     expect(two).toBe(2);
     expect(three).toBe(3);
+    expect(notFound).toBe(123);
   })
 })
