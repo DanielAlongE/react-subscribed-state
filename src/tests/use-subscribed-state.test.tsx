@@ -206,15 +206,15 @@ describe('useSubscribedState', () => {
     }
 
     const customHook = () => {
-      const { getState, setState } = useSubscribedState(() => true)
-      return { getState, setState }
+      const { getStateField, setState } = useSubscribedState(() => true)
+      return { getStateField, setState }
     }
 
     const App = () => hookFactory(customHook)
 
     renderWithProvider(<App />);
 
-    const getState = hookObj.getState as ContextProp['getState']
+    const getStateField = hookObj.getStateField as ContextProp['getStateField']
     const setState = hookObj.setState as ContextProp['setState']
 
     let one:number
@@ -225,10 +225,10 @@ describe('useSubscribedState', () => {
     act(() => {
       setState({ one: 1, two: 2, three: 3 });
       // await sleep(1000)
-      one = getState('one')
-      two = getState('two')
-      three = getState('three')
-      notFound = getState('notFound', 123)
+      one = getStateField('one')
+      two = getStateField('two')
+      three = getStateField('three')
+      notFound = getStateField('notFound', 123)
     })
 
     expect(one).toBe(1);
