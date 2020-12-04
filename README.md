@@ -21,7 +21,6 @@ import { Provider } from "react-subscribed-state";
 
 function(){
   const initialState = {count:0, me:"daniel"}; //define initial state
-  const { Provider, value } = useProvider(initialState);
 
   return (
     <Provider initialState={initialState}>
