@@ -236,4 +236,58 @@ describe('useSubscribedState', () => {
     expect(three).toBe(3);
     expect(notFound).toBe(123);
   })
+
+  // it('useField sets and return field from state', () => {
+  //   let hookObj: any;
+  //   function hookFactory (hook: ()=>any): JSX.Element {
+  //     // eslint-disable-next-line no-unused-vars
+  //     hookObj = hook()
+  //     return null
+  //   }
+
+  //   const customHook = () => {
+  //     const { useField } = useSubscribedState((k) => {
+  //       console.log(k)
+  //       return true
+  //     }, 200)
+  //     return { useField }
+  //   }
+
+  //   let count = 0
+
+  //   const App = () => hookFactory(customHook)
+
+  //   renderWithProvider(<App />);
+
+  //   const useField = hookObj.useField as ContextProp['useField']
+
+  //   let one:number
+  //   let two:number
+  //   let three:number
+  //   let notFound:any
+
+  //   act(() => {
+  //     const [_one, setOne] = useField<number>('one')
+  //     const [_two, setTwo] = useField<number>('two')
+  //     const [_three, setThree] = useField<number>('three')
+  //     const [_notFound] = useField<number>('notFound', 123)
+
+  //     setOne(1)
+  //     setTwo(2)
+  //     setThree(3)
+
+  //     count += 1
+
+  //     one = _one
+  //     two = _two
+  //     three = _three
+  //     notFound = _notFound
+  //   })
+  //   console.log({ count })
+
+  //   expect(one).toBe(1);
+  //   expect(two).toBe(2);
+  //   expect(three).toBe(3);
+  //   expect(notFound).toBe(123);
+  // })
 })
