@@ -33,6 +33,5 @@ export function stringToArrayProp (param:string): any[] {
     }
     return o;
   });
-  console.log({ param, result })
   return result
 }
