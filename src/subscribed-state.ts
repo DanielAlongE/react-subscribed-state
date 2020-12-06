@@ -11,12 +11,12 @@ export type ShouldUpdateFunc = (key:string, value?:any, previousValue?:any)=> bo
 
 export interface ContextProp<T = any> {
     stateRef: MutableRefObject<T>
-    setState: (value:ValueProp)=>void
-    getState: ()=>T
-    setStateField: (field:string, value:ValueProp)=>void
-    getStateField: (field?:string, def?:unknown)=>any
-    addSubscriber: (i:RefFunc, d?:number)=>number
-    removeSubscriber: (index:number)=>void
+    setState: (value:ValueProp) => void
+    getState: () => T
+    setStateField: (field:string, value:ValueProp) => void
+    getStateField: (field:string, def?:unknown) => any
+    addSubscriber: (i:RefFunc, d?:number) => number
+    removeSubscriber: (index:number) => void
 }
 
 /**
@@ -92,7 +92,7 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
    * @param field string
    * @param _default unknown
    */
-  const getStateField = useCallback((field?:string, _default?:unknown) => {
+  const getStateField = useCallback((field:string, _default?:unknown) => {
     if (field) {
       return dotProp.get(stateRef.current, field, _default)
     }
