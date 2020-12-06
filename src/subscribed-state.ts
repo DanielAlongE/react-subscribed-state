@@ -17,7 +17,6 @@ export interface ContextProp<T = any> {
     getStateField: (field:string, def?:unknown) => any
     addSubscriber: (i:RefFunc, d?:number) => number
     removeSubscriber: (index:number) => void
-    useField: <T = any>(field:string, def?:unknown) => [T, (v: unknown) => void]
 }
 
 /**
@@ -101,21 +100,6 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
   }, []) as ContextProp<T>['getStateField']
 
   /**
-   * This will get specified field or default
-   * @param field string
-   * @param _default unknown
-   */
-  const useField = useCallback((field:string, _default?:unknown) => {
-    const previousValue = dotProp.get(stateRef.current, field, _default)
-    const setFieldValue: (v:unknown)=>void = (value:unknown) => {
-      const val = isFunction(value) ? value(previousValue) : value
-      stateRef.current = dotProp.set(stateRef.current, field, val)
-      notifySubscribers(field, val, previousValue)
-    }
-    return [previousValue, setFieldValue]
-  }, []) as ContextProp<T>['useField']
-
-  /**
    * This will set a field in state
    * @param key string
    * @param value ValueProp
@@ -156,7 +140,7 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
     }
   }, [])
 
-  return { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, useField }
+  return { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber }
 }
 
 /**
@@ -166,9 +150,9 @@ function useWrapper<T = any> (stateRef:MutableRefObject<T>) {
  */
 export function useProvider<T = any> (initialState: T) {
   const stateRef = useRef(initialState)
-  const { setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, useField } = useWrapper<T>(stateRef);
+  const { setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber } = useWrapper<T>(stateRef);
   const { Provider } = context;
-  const value = { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, useField };
+  const value = { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber };
 
   return { Provider, value };
 }
@@ -192,8 +176,7 @@ export function useSubscribedState<T = any> (
     setStateField,
     getStateField,
     addSubscriber,
-    removeSubscriber,
-    useField
+    removeSubscriber
   } = contextObject;
 
   const stateRef = contextObject.stateRef as MutableRefObject<T>
@@ -232,7 +215,7 @@ export function useSubscribedState<T = any> (
     }
   }
 
-  return { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, useField, reRender }
+  return { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, reRender }
 }
 
 export function SubscribedState ({
@@ -247,9 +230,9 @@ export function SubscribedState ({
     return false;
   }
 }:{ children: React.FC< ContextProp >, fields?: string[], delay?: number, debounceLimit?: number, shouldUpdate?:ShouldUpdateFunc }) {
-  const { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, useField } = useSubscribedState(shouldUpdate, delay, debounceLimit);
+  const { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber } = useSubscribedState(shouldUpdate, delay, debounceLimit);
 
-  return React.createElement(Comp, { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber, useField })
+  return React.createElement(Comp, { stateRef, setState, getState, setStateField, getStateField, addSubscriber, removeSubscriber })
 }
 
 /**
