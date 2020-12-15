@@ -72,3 +72,4 @@ function(){
 
 ## Live Examples
 [Counter](https://codesandbox.io/s/dry-paper-pm1n9?file=/src/App.tsx)
+[Counter using hooks](https://codesandbox.io/s/silly-keldysh-jdesr?file=/src/App.tsx)
