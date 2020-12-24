@@ -1,6 +1,10 @@
 # react-subscribed-state
 A custom state reactivity pattern in React.js
 
+Sharing state between components is made easy without unnecessary side effects.
+
+It is easy to setup and reason about.
+
 With react-subscribed-state, components can subscribe to fields in the state such that they are able to re-render when the values of such fields change. This will go a long way to eliminate wasted renders as only the components that are required to rerender will do so.
 
 The following are some examples of use cases:
@@ -71,7 +75,6 @@ function(){
 ```
 
 ## Live Examples
-- [Counter](https://codesandbox.io/s/dry-paper-pm1n9?file=/src/App.tsx)
 - [Counter using hooks](https://codesandbox.io/s/silly-keldysh-jdesr?file=/src/App.tsx)
 - [Progress Bar](https://codesandbox.io/s/billowing-rain-2ursh?file=/src/App.tsx)
 - [Spreadsheet](https://codesandbox.io/s/spreadsheet-e8n31?file=/src/App.tsx)
